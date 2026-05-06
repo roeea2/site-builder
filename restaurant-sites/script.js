@@ -14,6 +14,34 @@ document.getElementById('modal-close')?.addEventListener('click', closeModal);
 modal?.addEventListener('click', e => { if (e.target === modal) closeModal(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
+// --- Opening hours widget ---
+const toggle247 = document.getElementById('input-hours-247');
+const hoursGrid = document.getElementById('hours-grid');
+const DAYS = ['sun','mon','tue','wed','thu','fri','sat'];
+
+toggle247?.addEventListener('change', () => {
+  hoursGrid.style.display = toggle247.checked ? 'none' : 'flex';
+});
+
+DAYS.forEach(day => {
+  document.getElementById(`hours-open-${day}`)?.addEventListener('change', function() {
+    const row = this.closest('.hours-day-row');
+    row.classList.toggle('day-row-closed', !this.checked);
+  });
+});
+
+function collectOpeningHours() {
+  if (toggle247?.checked) return { type: '24/7' };
+  const schedule = {};
+  DAYS.forEach(day => {
+    const open = document.getElementById(`hours-open-${day}`)?.checked ?? true;
+    const from = document.getElementById(`hours-from-${day}`)?.value || '12:00';
+    const to   = document.getElementById(`hours-to-${day}`)?.value   || '23:00';
+    schedule[day] = { open, from, to };
+  });
+  return { type: 'hours', schedule };
+}
+
 // --- Upload a single file to a Supabase storage bucket ---
 async function uploadFile(bucket, file) {
   if (!file) return null;
@@ -67,6 +95,7 @@ contactForm?.addEventListener('submit', async e => {
       primary_color:   document.getElementById('input-primary-color').value,
       description:     document.getElementById('input-description').value.trim() || null,
       address:         document.getElementById('input-address').value.trim() || null,
+      opening_hours:   collectOpeningHours(),
       reservation_url: document.getElementById('input-reservation-url').value.trim() || null,
     });
 

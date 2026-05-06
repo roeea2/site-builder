@@ -482,6 +482,57 @@ section { padding: 5rem 2rem; position: relative; z-index: 10; }
 .color-picker input[type="color"]::-webkit-color-swatch-wrapper { padding: 0; }
 .color-picker input[type="color"]::-webkit-color-swatch { border: 1px solid var(--border-subtle); border-radius: 6px; }
 
+/* Opening Hours Widget */
+.hours-wrap {
+  background: var(--bg-primary); border: 1px solid var(--border-subtle);
+  border-radius: 10px; padding: 0.85rem 1rem;
+}
+.hours-header {
+  display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.75rem;
+}
+.hours-title { font-size: 0.9rem; color: var(--text-secondary); }
+.toggle-247-label {
+  display: flex; align-items: center; gap: 0.5rem; cursor: pointer; user-select: none;
+  font-size: 0.85rem; color: var(--text-secondary);
+}
+.toggle-247-label input { display: none; }
+.toggle-track {
+  width: 36px; height: 20px; border-radius: 10px;
+  background: var(--border-subtle); transition: background 0.25s; flex-shrink: 0; position: relative;
+}
+.toggle-track::after {
+  content: ''; position: absolute; top: 3px; right: 3px;
+  width: 14px; height: 14px; border-radius: 50%; background: #fff;
+  transition: transform 0.25s;
+}
+.toggle-247-label input:checked + .toggle-track { background: var(--accent); }
+.toggle-247-label input:checked + .toggle-track::after { transform: translateX(-16px); }
+.hours-grid { display: flex; flex-direction: column; gap: 0.35rem; }
+.hours-day-row {
+  display: flex; align-items: center; gap: 0.5rem; padding: 0.35rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.04);
+}
+.hours-day-row:last-child { border-bottom: none; }
+.day-open-toggle { display: flex; align-items: center; cursor: pointer; }
+.day-open-toggle input { display: none; }
+.day-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  background: var(--border-subtle); transition: background 0.2s; flex-shrink: 0;
+}
+.day-open-toggle input:checked + .day-dot { background: var(--accent); }
+.day-name-label { width: 44px; font-size: 0.82rem; color: var(--text-secondary); flex-shrink: 0; }
+.hours-times { display: flex; align-items: center; gap: 0.35rem; flex: 1; }
+.hours-times input[type="time"] {
+  background: var(--bg-secondary); border: 1px solid var(--border-subtle);
+  border-radius: 6px; padding: 0.3rem 0.5rem; color: var(--text-primary);
+  font-size: 0.8rem; font-family: inherit; width: 82px; flex-shrink: 0;
+  direction: ltr; text-align: center;
+}
+.hours-times input[type="time"]:focus { outline: none; border-color: var(--accent); }
+.hours-sep { color: var(--text-muted); font-size: 0.8rem; }
+.day-row-closed .hours-times { opacity: 0.3; pointer-events: none; }
+.day-row-closed .day-name-label { opacity: 0.45; }
+
 /* ─── ANIMATIONS ─── */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }

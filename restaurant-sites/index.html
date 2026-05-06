@@ -329,6 +329,28 @@
 
         <input id="input-address" type="text" placeholder="כתובת המסעדה (רחוב, מספר, עיר)" required />
         <textarea id="input-description" placeholder="פרטים על המסעדה (סגנון, אווירה, קהל יעד)..." rows="3"></textarea>
+
+        <!-- Opening Hours -->
+        <div class="hours-wrap">
+          <div class="hours-header">
+            <span class="hours-title">שעות פעילות</span>
+            <label class="toggle-247-label">
+              <input type="checkbox" id="input-hours-247">
+              <span class="toggle-track"></span>
+              24/7
+            </label>
+          </div>
+          <div id="hours-grid" class="hours-grid">
+            <!-- sun --> <div class="hours-day-row" data-day="sun"><label class="day-open-toggle"><input type="checkbox" id="hours-open-sun" checked><span class="day-dot"></span></label><span class="day-name-label">ראשון</span><div class="hours-times"><input type="time" id="hours-from-sun" value="12:00"><span class="hours-sep">—</span><input type="time" id="hours-to-sun" value="23:00"></div></div>
+            <!-- mon --> <div class="hours-day-row" data-day="mon"><label class="day-open-toggle"><input type="checkbox" id="hours-open-mon" checked><span class="day-dot"></span></label><span class="day-name-label">שני</span><div class="hours-times"><input type="time" id="hours-from-mon" value="12:00"><span class="hours-sep">—</span><input type="time" id="hours-to-mon" value="23:00"></div></div>
+            <!-- tue --> <div class="hours-day-row" data-day="tue"><label class="day-open-toggle"><input type="checkbox" id="hours-open-tue" checked><span class="day-dot"></span></label><span class="day-name-label">שלישי</span><div class="hours-times"><input type="time" id="hours-from-tue" value="12:00"><span class="hours-sep">—</span><input type="time" id="hours-to-tue" value="23:00"></div></div>
+            <!-- wed --> <div class="hours-day-row" data-day="wed"><label class="day-open-toggle"><input type="checkbox" id="hours-open-wed" checked><span class="day-dot"></span></label><span class="day-name-label">רביעי</span><div class="hours-times"><input type="time" id="hours-from-wed" value="12:00"><span class="hours-sep">—</span><input type="time" id="hours-to-wed" value="23:00"></div></div>
+            <!-- thu --> <div class="hours-day-row" data-day="thu"><label class="day-open-toggle"><input type="checkbox" id="hours-open-thu" checked><span class="day-dot"></span></label><span class="day-name-label">חמישי</span><div class="hours-times"><input type="time" id="hours-from-thu" value="12:00"><span class="hours-sep">—</span><input type="time" id="hours-to-thu" value="23:00"></div></div>
+            <!-- fri --> <div class="hours-day-row" data-day="fri"><label class="day-open-toggle"><input type="checkbox" id="hours-open-fri" checked><span class="day-dot"></span></label><span class="day-name-label">שישי</span><div class="hours-times"><input type="time" id="hours-from-fri" value="12:00"><span class="hours-sep">—</span><input type="time" id="hours-to-fri" value="01:00"></div></div>
+            <!-- sat --> <div class="hours-day-row" data-day="sat"><label class="day-open-toggle"><input type="checkbox" id="hours-open-sat" checked><span class="day-dot"></span></label><span class="day-name-label">שבת</span><div class="hours-times"><input type="time" id="hours-from-sat" value="12:00"><span class="hours-sep">—</span><input type="time" id="hours-to-sat" value="01:00"></div></div>
+          </div>
+        </div>
+
         <input id="input-reservation-url" type="url" placeholder="קישור להזמנת מקומות (אופציונלי — Wolt, OpenTable וכו')" />
         <button type="submit" class="btn-primary" style="width:100%;text-align:center;justify-content:center; margin-top:0.5rem;">שליחה ותחילת עבודה</button>
       </form>
