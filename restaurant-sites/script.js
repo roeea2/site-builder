@@ -66,6 +66,7 @@ contactForm?.addEventListener('submit', async e => {
       bg_color:        document.getElementById('input-bg-color').value,
       primary_color:   document.getElementById('input-primary-color').value,
       description:     document.getElementById('input-description').value.trim() || null,
+      address:         document.getElementById('input-address').value.trim() || null,
       reservation_url: document.getElementById('input-reservation-url').value.trim() || null,
     });
 
