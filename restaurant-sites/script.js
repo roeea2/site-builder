@@ -55,6 +55,7 @@ contactForm?.addEventListener('submit', async e => {
     ]);
 
     const { error } = await supabase.from('leads').insert({
+      project_name:    'restaurants',
       full_name:       document.getElementById('input-name').value.trim(),
       phone:           document.getElementById('input-phone').value.trim(),
       restaurant_name: document.getElementById('input-restaurant').value.trim(),
