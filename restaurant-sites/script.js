@@ -1,10 +1,10 @@
-const SUPABASE_URL = 'https://opejdkmykxlefswguado.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9wZWpka215a3hsZWZzd2d1YWRvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgwNjYyNjAsImV4cCI6MjA5MzY0MjI2MH0.BMoXpA-R5_49QM--69atVC49cdnnsa0Y_8ogvvqfeDs';
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// Public config injected by build — never hardcode secrets here
+const SUPABASE_URL      = window.SUPABASE_URL;
+const SUPABASE_ANON_KEY = window.SUPABASE_ANON_KEY;
 
 // --- Modal ---
 const modal = document.getElementById('contact-modal');
-function openModal() { modal.style.display = 'flex'; }
+function openModal()  { modal.style.display = 'flex'; }
 function closeModal() { modal.style.display = 'none'; }
 
 document.getElementById('contact-btn')?.addEventListener('click', openModal);
@@ -25,8 +25,7 @@ toggle247?.addEventListener('change', () => {
 
 DAYS.forEach(day => {
   document.getElementById(`hours-open-${day}`)?.addEventListener('change', function() {
-    const row = this.closest('.hours-day-row');
-    row.classList.toggle('day-row-closed', !this.checked);
+    this.closest('.hours-day-row').classList.toggle('day-row-closed', !this.checked);
   });
 });
 
@@ -34,21 +33,29 @@ function collectOpeningHours() {
   if (toggle247?.checked) return { type: '24/7' };
   const schedule = {};
   DAYS.forEach(day => {
-    const open = document.getElementById(`hours-open-${day}`)?.checked ?? true;
-    const from = document.getElementById(`hours-from-${day}`)?.value || '12:00';
-    const to   = document.getElementById(`hours-to-${day}`)?.value   || '23:00';
-    schedule[day] = { open, from, to };
+    schedule[day] = {
+      open: document.getElementById(`hours-open-${day}`)?.checked ?? true,
+      from: document.getElementById(`hours-from-${day}`)?.value || '12:00',
+      to:   document.getElementById(`hours-to-${day}`)?.value   || '23:00',
+    };
   });
   return { type: 'hours', schedule };
 }
 
-// --- Upload a single file to a Supabase storage bucket ---
+// --- Upload a single file to Supabase Storage via REST ---
 async function uploadFile(bucket, file) {
   if (!file) return null;
   const path = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9._-]/g, '_')}`;
-  const { data, error } = await supabase.storage.from(bucket).upload(path, file, { upsert: false });
-  if (error) { console.error(`Upload error (${bucket}):`, error); return null; }
-  return supabase.storage.from(bucket).getPublicUrl(data.path).data.publicUrl;
+  const res = await fetch(`${SUPABASE_URL}/storage/v1/object/${bucket}/${path}`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+      'Content-Type': file.type || 'application/octet-stream',
+    },
+    body: file,
+  });
+  if (!res.ok) { console.error('Upload error:', await res.text()); return null; }
+  return `${SUPABASE_URL}/storage/v1/object/public/${bucket}/${path}`;
 }
 
 // --- Upload multiple files, return array of URLs ---
@@ -71,35 +78,43 @@ contactForm?.addEventListener('submit', async e => {
   btn.disabled = true;
 
   try {
-    const logoFile   = document.getElementById('input-logo').files[0] || null;
+    const logoFile   = document.getElementById('input-logo').files[0]   || null;
     const imageFiles = [...document.getElementById('input-images').files];
-    const menuFile   = document.getElementById('input-menu').files[0] || null;
+    const menuFile   = document.getElementById('input-menu').files[0]   || null;
 
-    // Upload files in parallel
     const [logoUrl, imageUrls, menuUrl] = await Promise.all([
       uploadFile('logos', logoFile),
       uploadFiles('images', imageFiles),
       uploadFile('menus', menuFile),
     ]);
 
-    const { error } = await supabase.from('leads').insert({
-      project_name:    'restaurants',
-      full_name:       document.getElementById('input-name').value.trim(),
-      phone:           document.getElementById('input-phone').value.trim(),
-      restaurant_name: document.getElementById('input-restaurant').value.trim(),
-      email:           document.getElementById('input-email').value.trim() || null,
-      logo_url:        logoUrl,
-      images:          imageUrls.length ? imageUrls : null,
-      menu_url:        menuUrl,
-      bg_color:        document.getElementById('input-bg-color').value,
-      primary_color:   document.getElementById('input-primary-color').value,
-      description:     document.getElementById('input-description').value.trim() || null,
-      address:         document.getElementById('input-address').value.trim() || null,
-      opening_hours:   collectOpeningHours(),
-      reservation_url: document.getElementById('input-reservation-url').value.trim() || null,
+    const res = await fetch(`${SUPABASE_URL}/rest/v1/leads`, {
+      method: 'POST',
+      headers: {
+        'apikey':        SUPABASE_ANON_KEY,
+        'Authorization': `Bearer ${SUPABASE_ANON_KEY}`,
+        'Content-Type':  'application/json',
+        'Prefer':        'return=minimal',
+      },
+      body: JSON.stringify({
+        project_name:    'restaurants',
+        full_name:       document.getElementById('input-name').value.trim(),
+        phone:           document.getElementById('input-phone').value.trim(),
+        restaurant_name: document.getElementById('input-restaurant').value.trim(),
+        email:           document.getElementById('input-email').value.trim() || null,
+        logo_url:        logoUrl,
+        images:          imageUrls.length ? imageUrls : null,
+        menu_url:        menuUrl,
+        bg_color:        document.getElementById('input-bg-color').value,
+        primary_color:   document.getElementById('input-primary-color').value,
+        description:     document.getElementById('input-description').value.trim() || null,
+        address:         document.getElementById('input-address').value.trim()     || null,
+        opening_hours:   collectOpeningHours(),
+        reservation_url: document.getElementById('input-reservation-url').value.trim() || null,
+      }),
     });
 
-    if (error) throw error;
+    if (!res.ok) throw new Error(await res.text());
 
     btn.textContent = '✓ נשלח בהצלחה!';
     btn.style.background = 'linear-gradient(135deg, #22c55e, #16a34a)';
@@ -139,5 +154,5 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 
 // --- Mobile menu ---
 const mobileBtn = document.querySelector('.mobile-menu-btn');
-const navLinks = document.querySelector('.nav-links');
+const navLinks  = document.querySelector('.nav-links');
 mobileBtn?.addEventListener('click', () => { navLinks.classList.toggle('mobile-open'); });
