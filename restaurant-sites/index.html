@@ -296,43 +296,44 @@
       <p class="modal-text">השאר פרטים ונחזור אליך תוך 24 שעות עם הצעה מותאמת אישית.</p>
       <form id="contact-form" class="modal-form">
         <div class="form-row">
-          <input type="text" placeholder="שם מלא" required />
-          <input type="tel" placeholder="טלפון" required />
+          <input id="input-name" type="text" placeholder="שם מלא" required />
+          <input id="input-phone" type="tel" placeholder="טלפון" required />
         </div>
-        <input type="text" placeholder="שם המסעדה" required />
-        <input type="email" placeholder="אימייל" />
-        
+        <input id="input-restaurant" type="text" placeholder="שם המסעדה" required />
+        <input id="input-email" type="email" placeholder="אימייל" />
+
         <label class="file-upload">
           <span class="file-label">לוגו המסעדה</span>
-          <input type="file" accept="image/*" />
+          <input id="input-logo" type="file" accept="image/*" />
         </label>
         <label class="file-upload">
           <span class="file-label">5 תמונות לאתר</span>
-          <input type="file" accept="image/*" multiple />
+          <input id="input-images" type="file" accept="image/*" multiple />
         </label>
         <label class="file-upload">
           <span class="file-label">תפריט המסעדה (PDF/תמונה)</span>
-          <input type="file" accept=".pdf,image/*" />
+          <input id="input-menu" type="file" accept=".pdf,image/*" />
         </label>
-        
+
         <div class="color-picker-group">
           <span>צבעים לאתר:</span>
           <div class="colors-wrap">
             <label class="color-picker" title="צבע רקע">
-              <input type="color" value="#0a0a0f" /> רקע
+              <input id="input-bg-color" type="color" value="#0a0a0f" /> רקע
             </label>
             <label class="color-picker" title="צבע עיקרי">
-              <input type="color" value="#d4a44a" /> עיקרי
+              <input id="input-primary-color" type="color" value="#d4a44a" /> עיקרי
             </label>
           </div>
         </div>
 
-        <textarea placeholder="פרטים על המסעדה (סגנון, אווירה, קהל יעד)..." rows="3"></textarea>
+        <textarea id="input-description" placeholder="פרטים על המסעדה (סגנון, אווירה, קהל יעד)..." rows="3"></textarea>
         <button type="submit" class="btn-primary" style="width:100%;text-align:center;justify-content:center; margin-top:0.5rem;">שליחה ותחילת עבודה</button>
       </form>
     </div>
   </div>
 
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
   <script src="network.js"></script>
   <script src="script.js"></script>
 </body>
