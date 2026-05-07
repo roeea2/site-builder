@@ -1,0 +1,21 @@
+/* Hide Cardcom logo and test terminal business name */
+.logo-wrapper,
+.logo-container,
+.header-logo,
+[class*="logo"] img,
+img[src*="cardcom"],
+img[src*="logo"] { display: none !important; }
+
+/* Hide VenterraSIM / terminal business name row */
+.business-name,
+.company-name,
+[class*="company"],
+[class*="business"],
+.terminal-name { display: none !important; }
+
+/* Hide TESTTTTTTT test mode indicator */
+[class*="test"],
+.test-mode { display: none !important; }
+
+/* General page clean-up */
+body { font-family: Arial, sans-serif !important; }

@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>תשלום מאובטח | מנוסייט</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: #0a0a0f;
+      color: #e8e8e8;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* TOP BAR */
+    .topbar {
+      width: 100%;
+      padding: 1rem 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      background: rgba(255,255,255,0.03);
+    }
+    .topbar-logo {
+      font-size: 1.2rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #4f7856, #6c9f6e);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .topbar-secure {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.8rem;
+      color: #6c9f6e;
+      font-weight: 600;
+    }
+    .lock-icon {
+      width: 18px; height: 18px;
+      background: rgba(76,175,80,0.15);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px;
+    }
+
+    /* MAIN LAYOUT */
+    .page {
+      width: 100%;
+      max-width: 860px;
+      padding: 2.5rem 1.5rem 3rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    /* HEADER */
+    .header { text-align: center; }
+    .header h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.3rem;
+    }
+    .header p { font-size: 0.9rem; color: #888; }
+
+    /* AMOUNT CARD */
+    .amount-card {
+      background: rgba(76,120,86,0.12);
+      border: 1px solid rgba(76,120,86,0.25);
+      border-radius: 16px;
+      padding: 1.2rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .amount-label { font-size: 0.85rem; color: #888; }
+    .amount-value {
+      font-size: 1.6rem;
+      font-weight: 800;
+      color: #6c9f6e;
+      direction: ltr;
+    }
+
+    /* IFRAME WRAPPER */
+    .iframe-wrap {
+      background: #ffffff;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+      min-height: 820px;
+      position: relative;
+    }
+    .iframe-loading {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
+      gap: 1rem;
+      color: #444;
+      font-family: 'Heebo', sans-serif;
+      font-size: 0.9rem;
+      z-index: 1;
+      transition: opacity 0.3s;
+    }
+    .spinner {
+      width: 40px; height: 40px;
+      border: 3px solid #eee;
+      border-top-color: #4f7856;
+      border-radius: 50%;
+      animation: spin 0.7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    iframe {
+      width: 100%;
+      min-height: 820px;
+      border: none;
+      display: block;
+      position: relative;
+      z-index: 2;
+    }
+
+    /* TRUST ROW */
+    .trust-row {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .trust-item {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      color: #555;
+    }
+    .trust-item span { font-size: 1rem; }
+
+    /* ERROR */
+    .error-box {
+      background: rgba(220,50,50,0.1);
+      border: 1px solid rgba(220,50,50,0.25);
+      border-radius: 12px;
+      padding: 1.2rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #f88;
+      display: none;
+    }
+    .back-link {
+      display: block;
+      text-align: center;
+      color: #555;
+      font-size: 0.8rem;
+      text-decoration: none;
+      margin-top: 0.5rem;
+    }
+    .back-link:hover { color: #888; }
+  </style>
+</head>
+<body>
+
+  <div class="topbar">
+    <div class="topbar-logo">מנוסייט</div>
+    <div class="topbar-secure">
+      <div class="lock-icon">🔒</div>
+      תשלום מאובטח SSL
+    </div>
+  </div>
+
+  <div class="page">
+    <div class="header">
+      <h1>RoeeAI | בניית אתרים מקצועית וייחודית</h1>
+      <p>האתר יבנה מיידית לאחר השלמת התשלום</p>
+    </div>
+
+    <div class="amount-card">
+      <div class="amount-label">סכום לתשלום</div>
+      <div class="amount-value">₪500</div>
+    </div>
+
+    <div class="error-box" id="error-box">
+      לא נמצא קישור תשלום תקין. <a href="/" style="color:#f88">חזרה לדף הבית</a>
+    </div>
+
+    <div class="iframe-wrap" id="iframe-wrap">
+      <div class="iframe-loading" id="iframe-loading">
+        <div class="spinner"></div>
+        טוען טופס תשלום...
+      </div>
+      <iframe id="payment-frame" title="טופס תשלום מאובטח" allow="payment"></iframe>
+    </div>
+
+    <div class="trust-row">
+      <div class="trust-item"><span>🔐</span> SSL מוצפן</div>
+      <div class="trust-item"><span>🏦</span> מעובד על ידי קארדקום</div>
+      <div class="trust-item"><span>✅</span> PCI DSS תקן</div>
+    </div>
+
+    <a href="/" class="back-link">← ביטול וחזרה לדף הבית</a>
+  </div>
+
+  <script>
+    const url = new URLSearchParams(location.search).get('url');
+
+    if (!url) {
+      document.getElementById('iframe-wrap').style.display = 'none';
+      document.getElementById('error-box').style.display = 'block';
+    } else {
+      const frame = document.getElementById('payment-frame');
+      const loading = document.getElementById('iframe-loading');
+      frame.src = url;
+      frame.addEventListener('load', () => {
+        loading.style.opacity = '0';
+        setTimeout(() => loading.style.display = 'none', 300);
+      });
+    }
+  </script>
+</body>
+</html>

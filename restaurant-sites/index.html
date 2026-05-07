@@ -294,6 +294,11 @@
         </button>
       </div>
       <p class="modal-text">השאר פרטים ונחזור אליך תוך 24 שעות עם הצעה מותאמת אישית.</p>
+      <div id="form-error" class="form-error" style="display:none;">
+        <span class="form-error-icon">⚠️</span>
+        <span id="form-error-msg">שגיאה</span>
+        <button type="button" class="form-error-close" onclick="hideFormError()">✕</button>
+      </div>
       <form id="contact-form" class="modal-form">
         <div class="form-row">
           <input id="input-name" type="text" placeholder="שם מלא" required />
@@ -334,26 +339,136 @@
         <div class="hours-wrap">
           <div class="hours-header">
             <span class="hours-title">שעות פעילות</span>
-            <label class="toggle-247-label">
+            <label class="badge-247">
               <input type="checkbox" id="input-hours-247">
-              <span class="toggle-track"></span>
-              24/7
+              <span class="badge-247-text">24/7</span>
             </label>
           </div>
           <div id="hours-grid" class="hours-grid">
-            <!-- sun --> <div class="hours-day-row" data-day="sun"><label class="day-open-toggle"><input type="checkbox" id="hours-open-sun" checked><span class="day-dot"></span></label><span class="day-name-label">ראשון</span><div class="hours-times"><input type="time" id="hours-from-sun" value="12:00"><span class="hours-sep">—</span><input type="time" id="hours-to-sun" value="23:00"></div></div>
-            <!-- mon --> <div class="hours-day-row" data-day="mon"><label class="day-open-toggle"><input type="checkbox" id="hours-open-mon" checked><span class="day-dot"></span></label><span class="day-name-label">שני</span><div class="hours-times"><input type="time" id="hours-from-mon" value="12:00"><span class="hours-sep">—</span><input type="time" id="hours-to-mon" value="23:00"></div></div>
-            <!-- tue --> <div class="hours-day-row" data-day="tue"><label class="day-open-toggle"><input type="checkbox" id="hours-open-tue" checked><span class="day-dot"></span></label><span class="day-name-label">שלישי</span><div class="hours-times"><input type="time" id="hours-from-tue" value="12:00"><span class="hours-sep">—</span><input type="time" id="hours-to-tue" value="23:00"></div></div>
-            <!-- wed --> <div class="hours-day-row" data-day="wed"><label class="day-open-toggle"><input type="checkbox" id="hours-open-wed" checked><span class="day-dot"></span></label><span class="day-name-label">רביעי</span><div class="hours-times"><input type="time" id="hours-from-wed" value="12:00"><span class="hours-sep">—</span><input type="time" id="hours-to-wed" value="23:00"></div></div>
-            <!-- thu --> <div class="hours-day-row" data-day="thu"><label class="day-open-toggle"><input type="checkbox" id="hours-open-thu" checked><span class="day-dot"></span></label><span class="day-name-label">חמישי</span><div class="hours-times"><input type="time" id="hours-from-thu" value="12:00"><span class="hours-sep">—</span><input type="time" id="hours-to-thu" value="23:00"></div></div>
-            <!-- fri --> <div class="hours-day-row" data-day="fri"><label class="day-open-toggle"><input type="checkbox" id="hours-open-fri" checked><span class="day-dot"></span></label><span class="day-name-label">שישי</span><div class="hours-times"><input type="time" id="hours-from-fri" value="12:00"><span class="hours-sep">—</span><input type="time" id="hours-to-fri" value="01:00"></div></div>
-            <!-- sat --> <div class="hours-day-row" data-day="sat"><label class="day-open-toggle"><input type="checkbox" id="hours-open-sat" checked><span class="day-dot"></span></label><span class="day-name-label">שבת</span><div class="hours-times"><input type="time" id="hours-from-sat" value="12:00"><span class="hours-sep">—</span><input type="time" id="hours-to-sat" value="01:00"></div></div>
+            <!-- sun -->
+            <div class="hrow" data-day="sun">
+              <label class="hrow-toggle"><input type="checkbox" id="hours-open-sun" checked><span class="hrow-knob"></span></label>
+              <span class="hrow-day">ראשון</span>
+              <div class="hrow-times">
+                <input type="time" id="hours-from-sun" value="12:00">
+                <span class="hrow-sep">—</span>
+                <input type="time" id="hours-to-sun" value="23:00">
+              </div>
+              <span class="hrow-closed">סגור</span>
+            </div>
+            <!-- mon -->
+            <div class="hrow" data-day="mon">
+              <label class="hrow-toggle"><input type="checkbox" id="hours-open-mon" checked><span class="hrow-knob"></span></label>
+              <span class="hrow-day">שני</span>
+              <div class="hrow-times">
+                <input type="time" id="hours-from-mon" value="12:00">
+                <span class="hrow-sep">—</span>
+                <input type="time" id="hours-to-mon" value="23:00">
+              </div>
+              <span class="hrow-closed">סגור</span>
+            </div>
+            <!-- tue -->
+            <div class="hrow" data-day="tue">
+              <label class="hrow-toggle"><input type="checkbox" id="hours-open-tue" checked><span class="hrow-knob"></span></label>
+              <span class="hrow-day">שלישי</span>
+              <div class="hrow-times">
+                <input type="time" id="hours-from-tue" value="12:00">
+                <span class="hrow-sep">—</span>
+                <input type="time" id="hours-to-tue" value="23:00">
+              </div>
+              <span class="hrow-closed">סגור</span>
+            </div>
+            <!-- wed -->
+            <div class="hrow" data-day="wed">
+              <label class="hrow-toggle"><input type="checkbox" id="hours-open-wed" checked><span class="hrow-knob"></span></label>
+              <span class="hrow-day">רביעי</span>
+              <div class="hrow-times">
+                <input type="time" id="hours-from-wed" value="12:00">
+                <span class="hrow-sep">—</span>
+                <input type="time" id="hours-to-wed" value="23:00">
+              </div>
+              <span class="hrow-closed">סגור</span>
+            </div>
+            <!-- thu -->
+            <div class="hrow" data-day="thu">
+              <label class="hrow-toggle"><input type="checkbox" id="hours-open-thu" checked><span class="hrow-knob"></span></label>
+              <span class="hrow-day">חמישי</span>
+              <div class="hrow-times">
+                <input type="time" id="hours-from-thu" value="12:00">
+                <span class="hrow-sep">—</span>
+                <input type="time" id="hours-to-thu" value="23:00">
+              </div>
+              <span class="hrow-closed">סגור</span>
+            </div>
+            <!-- fri -->
+            <div class="hrow" data-day="fri">
+              <label class="hrow-toggle"><input type="checkbox" id="hours-open-fri" checked><span class="hrow-knob"></span></label>
+              <span class="hrow-day">שישי</span>
+              <div class="hrow-times">
+                <input type="time" id="hours-from-fri" value="12:00">
+                <span class="hrow-sep">—</span>
+                <input type="time" id="hours-to-fri" value="01:00">
+              </div>
+              <span class="hrow-closed">סגור</span>
+            </div>
+            <!-- sat -->
+            <div class="hrow" data-day="sat">
+              <label class="hrow-toggle"><input type="checkbox" id="hours-open-sat" checked><span class="hrow-knob"></span></label>
+              <span class="hrow-day">שבת</span>
+              <div class="hrow-times">
+                <input type="time" id="hours-from-sat" value="12:00">
+                <span class="hrow-sep">—</span>
+                <input type="time" id="hours-to-sat" value="01:00">
+              </div>
+              <span class="hrow-closed">סגור</span>
+            </div>
           </div>
         </div>
 
         <input id="input-reservation-url" type="url" placeholder="קישור להזמנת מקומות (אופציונלי — Wolt, OpenTable וכו')" />
+
+        <div class="social-inputs-group">
+          <span class="social-inputs-label">רשתות חברתיות (אופציונלי)</span>
+          <div class="social-input-row">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="social-icon facebook-icon"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            <input id="input-facebook" type="url" placeholder="קישור לדף פייסבוק" />
+          </div>
+          <div class="social-input-row">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="social-icon instagram-icon"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            <input id="input-instagram" type="url" placeholder="קישור לפרופיל אינסטגרם" />
+          </div>
+          <div class="social-input-row">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="social-icon tiktok-icon"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.5a8.17 8.17 0 0 0 4.78 1.52V6.56a4.85 4.85 0 0 1-1.01.13z"/></svg>
+            <input id="input-tiktok" type="url" placeholder="קישור לפרופיל טיקטוק" />
+          </div>
+        </div>
+
         <button type="submit" class="btn-primary" style="width:100%;text-align:center;justify-content:center; margin-top:0.5rem;">שליחה ותחילת עבודה</button>
       </form>
+
+      <div id="step-payment" class="step-payment" style="display:none;">
+        <div class="step-payment-icon">🎉</div>
+        <h3 class="step-payment-title">הפרטים התקבלו!</h3>
+        <p class="step-payment-sub">האתר שלך יהיה מוכן תוך 48 שעות.<br>לקבלת האתר יש להשלים תשלום.</p>
+
+        <div class="payment-amount-card">
+          <span class="payment-shekel">₪</span>
+          <span class="payment-price">500</span>
+          <span class="payment-label">בניית אתר פרימיום למסעדה</span>
+        </div>
+
+        <button id="btn-pay" class="btn-primary btn-pay-cta" type="button">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-left:6px"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          תשלום מאובטח ←
+        </button>
+
+        <div class="or-sep"><span>או</span></div>
+
+        <button id="btn-callback" class="btn-callback" type="button">
+          📞 בקשו שנתקשר אליכם
+        </button>
+        <p class="callback-note">נציג יחזור אליכם תוך שעה</p>
+      </div>
     </div>
   </div>
 

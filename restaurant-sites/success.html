@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>תשלום התקבל | מנוסייט</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Heebo', sans-serif;
+      background: #0a0a0f;
+      color: #e8e8e8;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 20px;
+      padding: 48px 40px;
+      max-width: 460px;
+      width: 90%;
+      text-align: center;
+    }
+    .icon { font-size: 64px; margin-bottom: 24px; }
+    h1 { font-size: 28px; font-weight: 700; margin-bottom: 12px; }
+    p { font-size: 16px; color: #aaa; line-height: 1.6; }
+    .spinner {
+      width: 48px; height: 48px;
+      border: 3px solid rgba(255,255,255,0.1);
+      border-top-color: #6c9f6e;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin: 0 auto 24px;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .btn {
+      display: inline-block;
+      margin-top: 32px;
+      padding: 14px 32px;
+      background: linear-gradient(135deg, #4f7856, #6c9f6e);
+      color: #fff;
+      border-radius: 12px;
+      text-decoration: none;
+      font-size: 15px;
+      font-weight: 600;
+    }
+    #loading, #success, #error { display: none; }
+    #loading { display: block; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div id="loading">
+      <div class="spinner"></div>
+      <h1>מאמת תשלום...</h1>
+      <p>רק רגע, מעבד את פרטי התשלום שלך</p>
+    </div>
+    <div id="success">
+      <div class="icon">✅</div>
+      <h1>תשלום התקבל!</h1>
+      <p>תודה! קיבלנו את התשלום שלך ונתחיל לבנות את האתר של <strong id="restaurant-name"></strong> בהקדם.<br><br>נשלח אליך עדכון ברגע שהאתר יהיה מוכן.</p>
+      <a href="https://restaurant-sites-six.vercel.app" class="btn">חזרה לדף הבית</a>
+    </div>
+    <div id="error">
+      <div class="icon">⚠️</div>
+      <h1>משהו השתבש</h1>
+      <p id="error-msg">אירעה שגיאה באימות התשלום. צור קשר עם התמיכה.</p>
+      <a href="https://restaurant-sites-six.vercel.app" class="btn">חזרה לדף הבית</a>
+    </div>
+  </div>
+
+  <script>
+    const params   = new URLSearchParams(location.search);
+    const leadId   = params.get('ReturnValue');
+    const lpCode   = params.get('LowProfileCode');
+
+    async function verify() {
+      if (!leadId) {
+        show('error', 'חסרים פרטי תשלום. צור קשר עם התמיכה.');
+        return;
+      }
+      try {
+        const res = await fetch('/api/payment-verify', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ leadId, lowProfileCode: lpCode }),
+        });
+        const data = await res.json();
+        if (res.ok && data.ok) {
+          document.getElementById('restaurant-name').textContent = data.restaurant || '';
+          show('success');
+        } else {
+          show('error', data.error || 'שגיאה בעיבוד התשלום.');
+        }
+      } catch (err) {
+        show('error', 'בעיית תקשורת. צור קשר עם התמיכה.');
+      }
+    }
+
+    function show(id, errMsg) {
+      document.getElementById('loading').style.display = 'none';
+      document.getElementById(id).style.display       = 'block';
+      if (errMsg) document.getElementById('error-msg').textContent = errMsg;
+    }
+
+    verify();
+  </script>
+</body>
+</html>
