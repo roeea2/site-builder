@@ -1,0 +1,2 @@
+window.SUPABASE_URL="https://opejdkmykxlefswguado.supabase.co";
+window.SUPABASE_ANON_KEY="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im9wZWpka215a3hsZWZzd2d1YWRvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgwNjYyNjAsImV4cCI6MjA5MzY0MjI2MH0.BMoXpA-R5_49QM--69atVC49cdnnsa0Y_8ogvvqfeDs";

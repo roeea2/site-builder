@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <title>בניית אתרים למספרות | עיצוב פרימיום שמביא לקוחות חדשים</title>
+  <meta name="description" content="בניית אתרים מקצועית למספרות ומספרים. עיצוב פרימיום, תיאום תורים, גלריית עיצובים, ו-SEO מותאם. האתר שלך תוך 48 שעות." />
+  <meta property="og:title" content="בניית אתרים למספרות | קאטסייט" />
+  <meta property="og:description" content="אתר מקצועי למספרה שלך – עיצוב פרימיום, תיאום תורים, גלריית עיצובים." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://barber-sites.vercel.app" />
+  <meta property="og:image" content="https://barber-sites.vercel.app/assets/hf_20260509_042236_12b5419a-38da-433c-9dfb-01ed864234dc.png" />
+  <meta property="og:image:width" content="1200" />
+  <meta property="og:image:height" content="630" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="https://barber-sites.vercel.app/assets/hf_20260509_042236_12b5419a-38da-433c-9dfb-01ed864234dc.png" />
+  <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="./favicon.svg" sizes="any" />
+  <link rel="apple-touch-icon" href="./favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Inter:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="network-canvas"></canvas>
+
+  <!-- Floating Icons: scissors, comb, razor, star, lightning, mirror -->
+  <div class="floating-icons">
+    <div class="floating-icon">
+      <!-- scissors -->
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
+    </div>
+    <div class="floating-icon">
+      <!-- comb -->
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M4 4h16a1 1 0 0 1 1 1v14a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V5a1 1 0 0 1 1-1z"/><line x1="7" y1="8" x2="7" y2="12"/><line x1="10" y1="8" x2="10" y2="14"/><line x1="13" y1="8" x2="13" y2="12"/><line x1="16" y1="8" x2="16" y2="14"/></svg>
+    </div>
+    <div class="floating-icon">
+      <!-- razor blade shape -->
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M6 3l12 9-12 9V3z"/></svg>
+    </div>
+    <div class="floating-icon">
+      <!-- star / quality -->
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+    </div>
+    <div class="floating-icon">
+      <!-- smartphone / digital -->
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+    </div>
+    <div class="floating-icon">
+      <!-- lightning / speed -->
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+    </div>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="nav-logo">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><line x1="20" y1="4" x2="8.12" y2="15.88"/><line x1="14.47" y1="14.48" x2="20" y2="20"/><line x1="8.12" y1="8.12" x2="12" y2="12"/></svg>
+      קאטסייט
+    </div>
+    <ul class="nav-links">
+      <li><a href="#features">שירותים</a></li>
+      <li><a href="#showcase">תיק עבודות</a></li>
+      <li><a href="#process">תהליך</a></li>
+      <li><a href="#about">אודות</a></li>
+    </ul>
+    <button id="contact-btn" class="nav-cta">רישום מהיר</button>
+    <button class="mobile-menu-btn" aria-label="תפריט">☰</button>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-content">
+      <span class="hero-badge">✂ בניית אתרים למספרות</span>
+      <h1>האתר שיביא לקוחות חדשים <span class="accent-text">למספרה שלך</span></h1>
+      <p class="hero-subtitle">עיצוב אתרים פרימיום למספרות ומספרים. תיאום תורים, גלריית עיצובים, מפה, שעות פתיחה. הכל תוך 48 שעות.</p>
+      <div class="hero-buttons">
+        <button id="contact-btn-hero" class="btn-primary">רוצה אתר? הירשם עכשיו ←</button>
+        <a href="#showcase" class="btn-secondary">ראה דוגמאות</a>
+      </div>
+      <div class="stats-bar">
+        <div class="stat-item">
+          <div class="stat-number">30+</div>
+          <div class="stat-label">אתרים שנבנו</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">48</div>
+          <div class="stat-label">שעות עד לאוויר</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">100%</div>
+          <div class="stat-label">לקוחות מרוצים</div>
+        </div>
+        <div class="stat-item">
+          <div class="stat-number">24/7</div>
+          <div class="stat-label">תמיכה טכנית</div>
+        </div>
+      </div>
+      <div class="hero-image">
+        <img src="./assets/hf_20260509_042236_12b5419a-38da-433c-9dfb-01ed864234dc.png" alt="דוגמה לאתר מספרה" loading="eager" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Features -->
+  <section id="features">
+    <div class="section-header fade-in">
+      <h2>למה המספרה שלך צריכה <span class="accent-text">אתר מקצועי</span>?</h2>
+      <p>לא רק אתר – כרטיס הביקור הדיגיטלי שעובד בשבילך כל הזמן</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card fade-in">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
+        </div>
+        <h3>עיצוב פרימיום</h3>
+        <p>עיצוב מותאם אישית שמשדר סגנון ומקצועיות. כל פיקסל מתוכנן כדי לגרום לאנשים לקבוע תור.</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        </div>
+        <h3>תיאום תורים</h3>
+        <p>אינטגרציה ישירה עם Treatwell, SimplyBook או כל מערכת תורים אחרת. הלקוחות קובעים בקליק.</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        </div>
+        <h3>גלריית עיצובים</h3>
+        <p>תיק עבודות מרהיב שמציג את הכישרון שלך. תמונות, לפני-אחרי, ועיצובים שגורמים ללקוחות לחרוץ.</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        </div>
+        <h3>SEO ושיווק</h3>
+        <p>כשמישהו בשכונה מחפש "מספרה קרובה" בגוגל, המספרה שלך תופיע ראשונה. יותר חשיפה, יותר לקוחות.</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+        </div>
+        <h3>מותאם לנייד</h3>
+        <p>90% מהלקוחות מחפשים מספרה מהטלפון. האתר שלך ייראה ויעבוד מושלם על כל מסך.</p>
+      </div>
+      <div class="feature-card fade-in">
+        <div class="feature-icon">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+        <h3>ביצועים מהירים</h3>
+        <p>טעינה בפחות משנייה. אתר איטי = לקוחות שהולכים למתחרה. אצלנו הכל עף.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Showcase -->
+  <section id="showcase">
+    <div class="showcase fade-in">
+      <div class="showcase-img">
+        <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=700&q=80&auto=format&fit=crop" alt="מספרה מקצועית" loading="lazy" />
+      </div>
+      <div class="showcase-text">
+        <h2>אתר שמשקף את <span class="accent-text">הסגנון</span> של המספרה</h2>
+        <p>כל מספרה היא ייחודית, ולכן כל אתר שאנחנו בונים הוא ייחודי. אנחנו לא משתמשים בתבניות – כל עיצוב נבנה מאפס בהתאם לאיש ולמקום.</p>
+        <ul class="showcase-list">
+          <li><span class="check">✓</span> לוגו ומיתוג מותאם אישית</li>
+          <li><span class="check">✓</span> גלריית עיצובים מרהיבה</li>
+          <li><span class="check">✓</span> כפתור קביעת תור בולט</li>
+          <li><span class="check">✓</span> ניווט לכתובת (Waze + Google Maps)</li>
+          <li><span class="check">✓</span> שעות פתיחה ויצירת קשר</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Portfolio gallery -->
+    <div class="fade-in" style="margin-top: 6rem; max-width: 1200px; margin-left: auto; margin-right: auto; margin-top: 6rem;">
+      <h3 style="text-align: center; font-size: 2rem; font-weight: 800; margin-bottom: 3rem; letter-spacing: -0.02em;">הפרויקטים ה<span class="accent-text">אחרונים</span> שלנו</h3>
+      <div class="portfolio-grid">
+        <div class="portfolio-item">
+          <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=600&q=80&auto=format&fit=crop" alt="מספרה ראשית" loading="lazy" />
+          <div class="portfolio-overlay"><span>מספרה קלאסית בתל אביב</span></div>
+        </div>
+        <div class="portfolio-item">
+          <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=600&q=80&auto=format&fit=crop" alt="ברברשופ מודרני" loading="lazy" />
+          <div class="portfolio-overlay"><span>ברברשופ מודרני בהרצליה</span></div>
+        </div>
+        <div class="portfolio-item">
+          <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=600&q=80&auto=format&fit=crop" alt="עיצוב זקן" loading="lazy" />
+          <div class="portfolio-overlay"><span>מספרת גברים פרימיום</span></div>
+        </div>
+        <div class="portfolio-item">
+          <img src="https://images.unsplash.com/photo-1519735777090-cecb86a2a9c4?w=600&q=80&auto=format&fit=crop" alt="מספרה יוקרתית" loading="lazy" />
+          <div class="portfolio-overlay"><span>מספרת בוטיק ברמת גן</span></div>
+        </div>
+        <div class="portfolio-item">
+          <img src="https://images.unsplash.com/photo-1582095133179-bfd08e2fb6b8?w=600&q=80&auto=format&fit=crop" alt="ספר מקצועי" loading="lazy" />
+          <div class="portfolio-overlay"><span>ספר מקצועי בחיפה</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Services highlight -->
+  <section>
+    <div class="section-header fade-in">
+      <h2>השירותים שלך, <span class="accent-text">מוצגים בצורה מושלמת</span></h2>
+      <p>כל אחד מהשירותים שאתה מציע יוצג בצורה מקצועית באתר שלך</p>
+    </div>
+    <div class="services-highlight">
+      <div class="service-highlight-card fade-in">
+        <div class="svc-icon">✂</div>
+        <h4>תספורת גברים</h4>
+      </div>
+      <div class="service-highlight-card fade-in">
+        <div class="svc-icon">🪒</div>
+        <h4>עיצוב זקן</h4>
+      </div>
+      <div class="service-highlight-card fade-in">
+        <div class="svc-icon">💈</div>
+        <h4>גילוח מסורתי</h4>
+      </div>
+      <div class="service-highlight-card fade-in">
+        <div class="svc-icon">👦</div>
+        <h4>תספורת ילדים</h4>
+      </div>
+      <div class="service-highlight-card fade-in">
+        <div class="svc-icon">💇</div>
+        <h4>עיצוב שיער</h4>
+      </div>
+      <div class="service-highlight-card fade-in">
+        <div class="svc-icon">🎨</div>
+        <h4>צביעת שיער</h4>
+      </div>
+      <div class="service-highlight-card fade-in">
+        <div class="svc-icon">🧖</div>
+        <h4>טיפולי קרקפת</h4>
+      </div>
+      <div class="service-highlight-card fade-in">
+        <div class="svc-icon">📅</div>
+        <h4>קביעת תורים</h4>
+      </div>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section id="process">
+    <div class="section-header fade-in">
+      <h2>איך זה <span class="accent-text">עובד</span>?</h2>
+      <p>תהליך פשוט ומהיר – מהמוק-אפ ועד אתר חי תוך 48 שעות</p>
+    </div>
+    <div class="process-steps">
+      <div class="process-step fade-in">
+        <div class="step-number">1</div>
+        <div class="step-content">
+          <h3>צפייה במוק-אפ מותאם</h3>
+          <p>נשלח לך קישור לאתר לדוגמה שמתאים לסגנון המספרה שלך, לפני שמשלמים שקל אחד.</p>
+        </div>
+      </div>
+      <div class="process-step fade-in">
+        <div class="step-number">2</div>
+        <div class="step-content">
+          <h3>מילוי פרטים על המספרה</h3>
+          <p>טופס קצר עם כל מה שנדרש – שם, שעות, שירותים, לוגו ותמונות. לא לוקח יותר מ-5 דקות.</p>
+        </div>
+      </div>
+      <div class="process-step fade-in">
+        <div class="step-number">3</div>
+        <div class="step-content">
+          <h3>שיחת היכרות קצרה</h3>
+          <p>נדבר על הסגנון, הצבעים, ומה הכי חשוב לך באתר. תיאום ציפיות מדויק.</p>
+        </div>
+      </div>
+      <div class="process-step fade-in">
+        <div class="step-number">4</div>
+        <div class="step-content">
+          <h3>בנייה ודיוק האתר</h3>
+          <p>בונים את האתר לפי הפרטים שמסרת, עם כל הפיצ'רים שסוכמו. מדייקים עד שמושלם.</p>
+        </div>
+      </div>
+      <div class="process-step fade-in">
+        <div class="step-number">5</div>
+        <div class="step-content">
+          <h3>השקה לאוויר 🚀</h3>
+          <p>האתר עולה לאוויר על דומיין מאובטח וחינמי. אתה מקבל את הקישור ישירות לאימייל.</p>
+        </div>
+      </div>
+    </div>
+    <div class="fade-in" style="max-width: 700px; margin: 2.5rem auto 0; background: var(--glass-bg); padding: 1.5rem; border-radius: 16px; border: 1px solid var(--border-subtle);">
+      <h4 style="color: var(--accent); margin-bottom: 0.8rem; font-size: 1.05rem;">כמה פרטים שכדאי לדעת:</h4>
+      <ul style="list-style: none; color: var(--text-secondary); font-size: 0.92rem; line-height: 1.65;">
+        <li style="margin-bottom: 0.5rem;"><span style="color: var(--accent); margin-left: 6px;">✓</span> <strong>עיצוב ייחודי לכל מספרה</strong> – לא תבניות גנריות, כל אתר נבנה מאפס.</li>
+        <li style="margin-bottom: 0.5rem;"><span style="color: var(--accent); margin-left: 6px;">✓</span> <strong>ללא פיצ'רים מורכבים</strong> – אתר תדמית פרימיום, מהיר ומדויק.</li>
+        <li><span style="color: var(--accent); margin-left: 6px;">✓</span> <strong>דומיין Vercel חינמי</strong> – מושק על דומיין מאובטח ומהיר ללא עלות נוספת.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="section-header fade-in">
+      <h2>מי <span class="accent-text">מאחורי</span> הקלעים?</h2>
+    </div>
+    <div class="about-card fade-in">
+      <div class="about-img-wrapper">
+        <img src="https://restaurant-sites-six.vercel.app/assets/roee-pfp.jpg" alt="רועי – בניית אתרים" class="about-img" />
+      </div>
+      <div class="about-text">
+        <h3>רועי | מומחה בניית אתרים לעסקים</h3>
+        <p>בניתי עשרות אתרים לעסקים קטנים בישראל. אני יודע מה גורם לאתר לעבוד, להמיר מבקרים ללקוחות, ולגרום לעסק שלך להיראות מקצועי ומהימן. כל אתר שאני בונה הוא חוויה – לא סתם עמוד באינטרנט.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta-section fade-in">
+    <h2>מוכן להביא את המספרה שלך <span class="accent-text">לרמה הבאה</span>?</h2>
+    <p>בוא נבנה ביחד את האתר שהמספרה שלך מגיעה לו.</p>
+    <button id="cta-contact-btn" class="btn-primary" style="font-size:1.1rem; padding:1rem 3rem;">הירשם עכשיו ←</button>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>© 2026 קאטסייט – בניית אתרים למספרות. כל הזכויות שמורות.</p>
+  </footer>
+
+  <!-- Contact Modal -->
+  <div id="contact-modal" class="modal-overlay" style="display:none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>רישום מהיר</h2>
+        <button id="modal-close" class="modal-close" aria-label="סגור">
+          <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <p class="modal-text">השאר פרטים ונחזור אליך תוך 24 שעות עם הצעה מותאמת.</p>
+
+      <div id="form-error" class="form-error" style="display:none;">
+        <span>⚠</span>
+        <span id="form-error-msg">שגיאה</span>
+        <button type="button" class="form-error-close" onclick="hideFormError()">✕</button>
+      </div>
+
+      <form id="contact-form" class="modal-form">
+        <div class="form-row">
+          <input id="input-name"  type="text" placeholder="שם מלא" required />
+          <input id="input-phone" type="tel"  placeholder="טלפון"   required />
+        </div>
+        <input id="input-barber" type="text"  placeholder="שם המספרה" required />
+        <input id="input-email"  type="email" placeholder="אימייל (אופציונלי)" />
+
+        <label class="file-upload">
+          <span class="file-label">לוגו המספרה</span>
+          <input id="input-logo"   type="file" accept="image/*" />
+        </label>
+        <label class="file-upload">
+          <span class="file-label">תמונות לאתר (עד 15 – תספורות, עיצובים, הסלון)</span>
+          <input id="input-images" type="file" accept="image/*" multiple />
+        </label>
+
+        <div class="color-picker-group">
+          <span>צבעי האתר:</span>
+          <div class="colors-wrap">
+            <label class="color-picker" title="צבע רקע">
+              <input id="input-bg-color"      type="color" value="#07090f" /> רקע
+            </label>
+            <label class="color-picker" title="צבע עיקרי">
+              <input id="input-primary-color" type="color" value="#22a9c5" /> עיקרי
+            </label>
+          </div>
+        </div>
+
+        <div class="services-group">
+          <span class="services-label">שירותים מוצעים</span>
+          <div class="services-chips">
+            <div class="service-chip">
+              <input type="checkbox" id="svc-men"     name="services" value="תספורת גברים" checked>
+              <label for="svc-men">✂ תספורת גברים</label>
+            </div>
+            <div class="service-chip">
+              <input type="checkbox" id="svc-beard"   name="services" value="עיצוב זקן" checked>
+              <label for="svc-beard">🪒 עיצוב זקן</label>
+            </div>
+            <div class="service-chip">
+              <input type="checkbox" id="svc-shave"   name="services" value="גילוח מסורתי">
+              <label for="svc-shave">💈 גילוח מסורתי</label>
+            </div>
+            <div class="service-chip">
+              <input type="checkbox" id="svc-kids"    name="services" value="תספורת ילדים">
+              <label for="svc-kids">👦 תספורת ילדים</label>
+            </div>
+            <div class="service-chip">
+              <input type="checkbox" id="svc-style"   name="services" value="עיצוב שיער">
+              <label for="svc-style">💇 עיצוב שיער</label>
+            </div>
+            <div class="service-chip">
+              <input type="checkbox" id="svc-color"   name="services" value="צביעת שיער">
+              <label for="svc-color">🎨 צביעת שיער</label>
+            </div>
+            <div class="service-chip">
+              <input type="checkbox" id="svc-scalp"   name="services" value="טיפולי קרקפת">
+              <label for="svc-scalp">🧖 טיפולי קרקפת</label>
+            </div>
+            <div class="service-chip">
+              <input type="checkbox" id="svc-women"   name="services" value="תספורת נשים">
+              <label for="svc-women">💆 תספורת נשים</label>
+            </div>
+            <div class="service-chip">
+              <input type="checkbox" id="svc-bride"   name="services" value="תספורת כלות">
+              <label for="svc-bride">👰 תספורת כלות</label>
+            </div>
+          </div>
+        </div>
+
+        <input id="input-address" type="text" placeholder="כתובת המספרה (רחוב, מספר, עיר)" required />
+        <textarea id="input-description" placeholder="תיאור קצר על המספרה (סגנון, קהל יעד, אווירה)..." rows="3"></textarea>
+
+        <!-- Opening Hours -->
+        <div class="hours-wrap">
+          <div class="hours-header">
+            <span class="hours-title">שעות פתיחה</span>
+            <label class="badge-247">
+              <input type="checkbox" id="input-hours-247">
+              <span class="badge-247-text">24/7</span>
+            </label>
+          </div>
+          <div id="hours-grid" class="hours-grid">
+            <div class="hrow" data-day="sun">
+              <label class="hrow-toggle"><input type="checkbox" id="hours-open-sun" checked><span class="hrow-knob"></span></label>
+              <span class="hrow-day">ראשון</span>
+              <div class="hrow-times">
+                <select id="hours-from-sun"><option value="07:00">07</option><option value="08:00">08</option><option value="09:00" selected>09</option><option value="10:00">10</option><option value="11:00">11</option><option value="12:00">12</option></select>
+                <span class="hrow-sep">—</span>
+                <select id="hours-to-sun"><option value="18:00">18</option><option value="19:00">19</option><option value="20:00">20</option><option value="21:00" selected>21</option><option value="22:00">22</option><option value="23:00">23</option></select>
+              </div>
+              <span class="hrow-closed">סגור</span>
+            </div>
+            <div class="hrow" data-day="mon">
+              <label class="hrow-toggle"><input type="checkbox" id="hours-open-mon" checked><span class="hrow-knob"></span></label>
+              <span class="hrow-day">שני</span>
+              <div class="hrow-times">
+                <select id="hours-from-mon"><option value="07:00">07</option><option value="08:00">08</option><option value="09:00" selected>09</option><option value="10:00">10</option><option value="11:00">11</option><option value="12:00">12</option></select>
+                <span class="hrow-sep">—</span>
+                <select id="hours-to-mon"><option value="18:00">18</option><option value="19:00">19</option><option value="20:00">20</option><option value="21:00" selected>21</option><option value="22:00">22</option><option value="23:00">23</option></select>
+              </div>
+              <span class="hrow-closed">סגור</span>
+            </div>
+            <div class="hrow" data-day="tue">
+              <label class="hrow-toggle"><input type="checkbox" id="hours-open-tue" checked><span class="hrow-knob"></span></label>
+              <span class="hrow-day">שלישי</span>
+              <div class="hrow-times">
+                <select id="hours-from-tue"><option value="07:00">07</option><option value="08:00">08</option><option value="09:00" selected>09</option><option value="10:00">10</option><option value="11:00">11</option><option value="12:00">12</option></select>
+                <span class="hrow-sep">—</span>
+                <select id="hours-to-tue"><option value="18:00">18</option><option value="19:00">19</option><option value="20:00">20</option><option value="21:00" selected>21</option><option value="22:00">22</option><option value="23:00">23</option></select>
+              </div>
+              <span class="hrow-closed">סגור</span>
+            </div>
+            <div class="hrow" data-day="wed">
+              <label class="hrow-toggle"><input type="checkbox" id="hours-open-wed" checked><span class="hrow-knob"></span></label>
+              <span class="hrow-day">רביעי</span>
+              <div class="hrow-times">
+                <select id="hours-from-wed"><option value="07:00">07</option><option value="08:00">08</option><option value="09:00" selected>09</option><option value="10:00">10</option><option value="11:00">11</option><option value="12:00">12</option></select>
+                <span class="hrow-sep">—</span>
+                <select id="hours-to-wed"><option value="18:00">18</option><option value="19:00">19</option><option value="20:00">20</option><option value="21:00" selected>21</option><option value="22:00">22</option><option value="23:00">23</option></select>
+              </div>
+              <span class="hrow-closed">סגור</span>
+            </div>
+            <div class="hrow" data-day="thu">
+              <label class="hrow-toggle"><input type="checkbox" id="hours-open-thu" checked><span class="hrow-knob"></span></label>
+              <span class="hrow-day">חמישי</span>
+              <div class="hrow-times">
+                <select id="hours-from-thu"><option value="07:00">07</option><option value="08:00">08</option><option value="09:00" selected>09</option><option value="10:00">10</option><option value="11:00">11</option><option value="12:00">12</option></select>
+                <span class="hrow-sep">—</span>
+                <select id="hours-to-thu"><option value="18:00">18</option><option value="19:00">19</option><option value="20:00">20</option><option value="21:00" selected>21</option><option value="22:00">22</option><option value="23:00">23</option></select>
+              </div>
+              <span class="hrow-closed">סגור</span>
+            </div>
+            <div class="hrow" data-day="fri">
+              <label class="hrow-toggle"><input type="checkbox" id="hours-open-fri" checked><span class="hrow-knob"></span></label>
+              <span class="hrow-day">שישי</span>
+              <div class="hrow-times">
+                <select id="hours-from-fri"><option value="07:00">07</option><option value="08:00">08</option><option value="09:00" selected>09</option><option value="10:00">10</option><option value="11:00">11</option><option value="12:00">12</option></select>
+                <span class="hrow-sep">—</span>
+                <select id="hours-to-fri"><option value="13:00">13</option><option value="14:00">14</option><option value="15:00" selected>15</option><option value="16:00">16</option><option value="17:00">17</option></select>
+              </div>
+              <span class="hrow-closed">סגור</span>
+            </div>
+            <div class="hrow" data-day="sat">
+              <label class="hrow-toggle"><input type="checkbox" id="hours-open-sat"><span class="hrow-knob"></span></label>
+              <span class="hrow-day">שבת</span>
+              <div class="hrow-times">
+                <select id="hours-from-sat"><option value="09:00" selected>09</option><option value="10:00">10</option></select>
+                <span class="hrow-sep">—</span>
+                <select id="hours-to-sat"><option value="18:00" selected>18</option><option value="19:00">19</option></select>
+              </div>
+              <span class="hrow-closed">סגור</span>
+            </div>
+          </div>
+        </div>
+
+        <input id="input-booking-url" type="url" placeholder="קישור לקביעת תורים (Treatwell, SimplyBook וכו' – אופציונלי)" />
+
+        <div class="social-inputs-group">
+          <span class="social-inputs-label">רשתות חברתיות (אופציונלי)</span>
+          <div class="social-input-row">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="social-icon facebook-icon"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
+            <input id="input-facebook"  type="url" placeholder="קישור לדף פייסבוק" />
+          </div>
+          <div class="social-input-row">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="social-icon instagram-icon"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            <input id="input-instagram" type="url" placeholder="קישור לפרופיל אינסטגרם" />
+          </div>
+          <div class="social-input-row">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" class="social-icon tiktok-icon"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.5a8.17 8.17 0 0 0 4.78 1.52V6.56a4.85 4.85 0 0 1-1.01.13z"/></svg>
+            <input id="input-tiktok"    type="url" placeholder="קישור לפרופיל טיקטוק" />
+          </div>
+        </div>
+
+        <button type="submit" class="btn-primary" style="width:100%;text-align:center;justify-content:center;margin-top:0.5rem;">שליחה ותחילת עבודה ←</button>
+      </form>
+
+      <div id="step-payment" class="step-payment" style="display:none;">
+        <div class="step-payment-icon">🎉</div>
+        <h3 class="step-payment-title">הפרטים התקבלו!</h3>
+        <p class="step-payment-sub">האתר שלך יהיה מוכן תוך 48 שעות.<br>לקבלת האתר יש להשלים תשלום.</p>
+
+        <div class="payment-amount-card">
+          <span class="payment-shekel">₪</span>
+          <span class="payment-price">500</span>
+          <span class="payment-label">בניית אתר פרימיום למספרה</span>
+        </div>
+
+        <button id="btn-pay" class="btn-primary btn-pay-cta" type="button">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="vertical-align:middle;margin-left:6px"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+          תשלום מאובטח ←
+        </button>
+
+        <div class="or-sep"><span>או</span></div>
+
+        <button id="btn-callback" class="btn-callback" type="button">
+          📞 בקשו שנתקשר אליכם
+        </button>
+        <p class="callback-note">נציג יחזור אליכם תוך שעה</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="config.js"></script>
+  <script src="network.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

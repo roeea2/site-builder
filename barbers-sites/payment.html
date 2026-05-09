@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="he">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>תשלום מאובטח · קאטסייט</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:          #07090f;
+      --bg-2:        #0e1018;
+      --ink:         #edf0f8;
+      --ink-2:       #c4cad8;
+      --muted:       #6874a0;
+      --line:        rgba(255,255,255,.07);
+      --line-2:      rgba(255,255,255,.13);
+      --card:        #111420;
+      --card-2:      #171c28;
+      --accent:      #22a9c5;
+      --accent-2:    #1890b0;
+      --accent-ink:  #071218;
+      --accent-soft: rgba(34,169,197,.14);
+      --good:        #5ac8a0;
+      --good-soft:   rgba(90,200,160,.14);
+      --chip:        #181d2a;
+      --shadow:      0 1px 0 rgba(255,255,255,.03) inset, 0 30px 60px -30px rgba(0,0,0,.7);
+      --radius:      18px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body {
+      background: var(--bg); color: var(--ink);
+      font-family: 'Heebo', system-ui, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    body {
+      min-height: 100vh; padding: 40px 20px 80px;
+      background:
+        radial-gradient(900px 500px at 85% -10%, rgba(34,169,197,.10) 0%, transparent 60%),
+        radial-gradient(700px 400px at -10% 100%, rgba(24,144,176,.07) 0%, transparent 55%),
+        var(--bg);
+    }
+    .mono { font-family: 'JetBrains Mono', ui-monospace, monospace; font-feature-settings: "tnum" 1; }
+    .shell {
+      max-width: 1100px; margin: 0 auto;
+      display: grid; grid-template-columns: 1.2fr 1fr;
+      gap: 28px; align-items: start;
+    }
+    .topbar {
+      grid-column: 1 / -1; display: flex;
+      align-items: center; justify-content: space-between;
+      padding: 4px 6px 18px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand-mark {
+      width: 38px; height: 38px; border-radius: 11px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: var(--accent-ink);
+      display: grid; place-items: center;
+      font-size: 18px;
+      box-shadow: 0 6px 18px -6px rgba(34,169,197,.45);
+    }
+    .brand-name { font-weight: 700; letter-spacing: -.01em; }
+    .brand-name small { display: block; color: var(--muted); font-weight: 400; font-size: 12px; margin-top: 2px; }
+    .topbar-right { display: flex; align-items: center; gap: 14px; color: var(--muted); font-size: 13px; }
+    .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--good); box-shadow: 0 0 0 4px var(--good-soft); }
+    .lock-label { display: inline-flex; align-items: center; gap: 6px; }
+    .lock-label svg { width: 14px; height: 14px; }
+    .card {
+      background: linear-gradient(180deg, var(--card-2), var(--card));
+      border: 1px solid var(--line); border-radius: var(--radius);
+      box-shadow: var(--shadow); overflow: hidden;
+    }
+    .card-head {
+      padding: 22px 26px 16px; border-bottom: 1px dashed var(--line);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .step-pill {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--chip); border: 1px solid var(--line-2);
+      padding: 6px 10px; border-radius: 999px; font-size: 12px; color: var(--ink-2);
+    }
+    .step-pill b { font-weight: 600; color: var(--accent); }
+    .head-title { font-size: 20px; font-weight: 700; letter-spacing: -.02em; }
+    .head-sub { margin-top: 2px; color: var(--muted); font-size: 13px; }
+    .iframe-area { padding: 20px 20px 0; position: relative; }
+    .iframe-loading {
+      position: absolute; inset: 20px 20px 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background: var(--card); gap: 12px; color: var(--muted); font-size: 14px;
+      border-radius: 12px; z-index: 1; transition: opacity .3s;
+    }
+    .spinner {
+      width: 36px; height: 36px;
+      border: 2.5px solid var(--line-2); border-top-color: var(--accent);
+      border-radius: 50%; animation: spin .7s linear infinite;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    iframe { width: 100%; min-height: 780px; border: none; border-radius: 12px; display: block; position: relative; z-index: 2; }
+    .card-foot {
+      display: flex; align-items: center; gap: 10px;
+      padding: 16px 26px 20px; border-top: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(34,169,197,.04), transparent);
+      color: var(--muted); font-size: 12px;
+    }
+    .card-foot svg { width: 14px; height: 14px; flex-shrink: 0; }
+    .error-box {
+      margin: 20px 26px;
+      background: rgba(220,50,50,.1); border: 1px solid rgba(220,50,50,.2);
+      border-radius: 12px; padding: 16px 20px; text-align: center;
+      font-size: 14px; color: #f88; display: none;
+    }
+    .error-box a { color: inherit; font-weight: 600; }
+    .back-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      color: var(--muted); font-size: 13px; text-decoration: none;
+      margin-inline-start: auto; transition: color .15s;
+    }
+    .back-link:hover { color: var(--accent); }
+    .aside { display: flex; flex-direction: column; gap: 18px; position: sticky; top: 24px; }
+    .summary {
+      background: linear-gradient(180deg, var(--card-2), var(--card));
+      border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden;
+    }
+    .sum-head {
+      padding: 22px 22px 18px;
+      background: radial-gradient(400px 200px at 100% 0%, rgba(34,169,197,.16), transparent 70%), linear-gradient(180deg, rgba(34,169,197,.05), transparent 80%);
+      border-bottom: 1px solid var(--line);
+    }
+    .merchant { display: flex; align-items: center; gap: 12px; }
+    .merchant-mark {
+      width: 46px; height: 46px; border-radius: 13px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      color: var(--accent-ink); display: grid; place-items: center;
+      font-size: 20px; box-shadow: 0 6px 18px -6px rgba(34,169,197,.45);
+    }
+    .merchant-name { font-weight: 600; letter-spacing: -.01em; }
+    .merchant-name small { display: block; font-weight: 400; font-size: 12px; color: var(--muted); margin-top: 2px; }
+    .sum-amount { display: flex; align-items: baseline; justify-content: space-between; margin-top: 18px; }
+    .sum-amount .lbl { color: var(--ink-2); font-size: 13px; }
+    .sum-amount .val {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 38px; font-weight: 700; letter-spacing: -.02em;
+      color: var(--accent);
+    }
+    .sum-amount .val .cur { font-size: 18px; }
+    .sum-body { padding: 6px 22px 18px; }
+    .line-item {
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      padding: 14px 0; border-bottom: 1px dashed var(--line);
+    }
+    .line-item:last-child { border-bottom: 0; }
+    .li-left { display: flex; align-items: center; gap: 12px; }
+    .li-thumb {
+      width: 44px; height: 44px; border-radius: 10px;
+      background: var(--chip); border: 1px solid var(--line-2);
+      display: grid; place-items: center; font-size: 20px;
+      background-image: repeating-linear-gradient(45deg, rgba(255,255,255,.03) 0 6px, transparent 6px 12px);
+    }
+    .li-name { font-weight: 500; font-size: 14px; }
+    .li-name small { display: block; color: var(--muted); font-weight: 400; font-size: 12px; margin-top: 2px; }
+    .li-price { font-family: 'JetBrains Mono', monospace; font-weight: 500; white-space: nowrap; }
+    .totals { padding: 14px 22px; background: rgba(255,255,255,.02); border-top: 1px solid var(--line); }
+    .totals .row { display: flex; justify-content: space-between; font-size: 13px; color: var(--ink-2); padding: 4px 0; }
+    .totals .row.grand { font-size: 15px; font-weight: 600; color: var(--ink); margin-top: 6px; padding-top: 10px; border-top: 1px solid var(--line); }
+    .totals .num { font-family: 'JetBrains Mono', monospace; }
+    .trust {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px;
+      background: linear-gradient(180deg, var(--card-2), var(--card));
+      border: 1px solid var(--line); border-radius: var(--radius);
+      padding: 14px; box-shadow: var(--shadow);
+    }
+    .badge {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px; border-radius: 12px;
+      background: var(--chip); border: 1px solid var(--line);
+    }
+    .badge svg { width: 18px; height: 18px; color: var(--good); flex-shrink: 0; }
+    .badge .t { font-size: 12px; color: var(--ink-2); font-weight: 500; line-height: 1.25; }
+    .badge .t small { display: block; color: var(--muted); font-weight: 400; font-size: 11px; margin-top: 1px; }
+    .tiny-foot {
+      grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center;
+      color: var(--muted); font-size: 12px; padding: 18px 6px 0;
+    }
+    .tiny-foot a { color: var(--ink-2); text-decoration: none; border-bottom: 1px solid var(--line-2); padding-bottom: 1px; }
+    .tiny-foot a:hover { color: var(--accent); border-color: var(--accent); }
+    .tiny-foot .links { display: flex; gap: 18px; }
+    @media (max-width: 860px) { .shell { grid-template-columns: 1fr; } .aside { position: static; order: -1; } }
+    @media (max-width: 560px) { body { padding: 20px 12px 60px; } .trust { grid-template-columns: 1fr; } iframe { min-height: 700px; } }
+  </style>
+</head>
+<body>
+<div class="shell">
+
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-mark">✂</div>
+      <div class="brand-name">
+        CutSite · קאטסייט
+        <small>ניהול תשלומים מאובטח</small>
+      </div>
+    </div>
+    <div class="topbar-right">
+      <span class="lock-label">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 1 1 8 0v4"/></svg>
+        חיבור מאובטח · TLS 1.3
+      </span>
+      <span><span class="dot"></span></span>
+    </div>
+  </header>
+
+  <section class="card" aria-label="טופס תשלום">
+    <div class="card-head">
+      <div>
+        <div class="head-title">השלמת התשלום</div>
+        <div class="head-sub">מלא/י את פרטי הכרטיס בטופס המאובטח למטה</div>
+      </div>
+      <div class="step-pill">שלב <b>2</b> מתוך 2 · אישור</div>
+    </div>
+
+    <div class="error-box" id="error-box">
+      לא נמצא קישור תשלום תקין. <a href="/">חזרה לדף הבית</a>
+    </div>
+
+    <div class="iframe-area" id="iframe-area">
+      <div class="iframe-loading" id="iframe-loading">
+        <div class="spinner"></div>
+        טוען טופס תשלום...
+      </div>
+      <iframe id="payment-frame" title="טופס תשלום מאובטח" allow="payment"></iframe>
+    </div>
+
+    <div class="card-foot">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 4.5 3.4 8.6 8 10 4.6-1.4 8-5.5 8-10V6l-8-4z"/></svg>
+      החיוב מתבצע באבטחה מקסימלית דרך קארדקום. הכרטיס לא נשמר אצלנו.
+      <a href="/" class="back-link">← ביטול</a>
+    </div>
+  </section>
+
+  <aside class="aside">
+    <div class="summary">
+      <div class="sum-head">
+        <div class="merchant">
+          <div class="merchant-mark">✂</div>
+          <div class="merchant-name">
+            CutSite · קאטסייט
+            <small id="order-sub">בניית אתר למספרה</small>
+          </div>
+        </div>
+        <div class="sum-amount">
+          <span class="lbl">סכום לתשלום</span>
+          <span class="val mono"><span class="cur">₪</span>500.00</span>
+        </div>
+      </div>
+      <div class="sum-body">
+        <div class="line-item">
+          <div class="li-left">
+            <div class="li-thumb">✂</div>
+            <div class="li-name">
+              אתר מספרה מקצועי
+              <small>עיצוב, בנייה ועלייה לאוויר</small>
+            </div>
+          </div>
+          <div class="li-price">₪ 423.73</div>
+        </div>
+      </div>
+      <div class="totals">
+        <div class="row"><span>סכום ביניים</span><span class="num">₪ 423.73</span></div>
+        <div class="row"><span>מע"מ (18%)</span><span class="num">₪ 76.27</span></div>
+        <div class="row grand"><span>סה"כ לחיוב</span><span class="num">₪ 500.00</span></div>
+      </div>
+    </div>
+
+    <div class="trust">
+      <div class="badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+        <div class="t">PCI-DSS<small>תקן בינלאומי</small></div>
+      </div>
+      <div class="badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 1 1 8 0v4"/></svg>
+        <div class="t">SSL 256-bit<small>הצפנת תווך</small></div>
+      </div>
+      <div class="badge">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 4.5 3.4 8.6 8 10 4.6-1.4 8-5.5 8-10V6l-8-4z"/></svg>
+        <div class="t">3-D Secure<small>אימות נוסף</small></div>
+      </div>
+    </div>
+  </aside>
+
+  <footer class="tiny-foot">
+    <div>© 2026 CutSite · קאטסייט</div>
+    <div class="links">
+      <a href="#">תקנון</a>
+      <a href="#">מדיניות פרטיות</a>
+      <a href="#">צור קשר</a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  const params = new URLSearchParams(location.search);
+  const url    = params.get('url');
+  const barber = params.get('barber');
+
+  if (barber) document.getElementById('order-sub').textContent = barber;
+
+  if (!url) {
+    document.getElementById('iframe-area').style.display = 'none';
+    document.getElementById('error-box').style.display = 'block';
+  } else {
+    const frame   = document.getElementById('payment-frame');
+    const loading = document.getElementById('iframe-loading');
+    frame.src = url;
+    frame.addEventListener('load', () => {
+      loading.style.opacity = '0';
+      setTimeout(() => loading.style.display = 'none', 300);
+    });
+  }
+</script>
+</body>
+</html>
