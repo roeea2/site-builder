@@ -13,13 +13,13 @@ export default async function handler(req, res) {
     SumToBePaid:        '500',
     CoinID:             '1',
     ProductName:        'Barber Website - CutSite',
-    SuccessRedirectUrl: `${process.env.BARBERS_SITE_URL || 'https://barber-sites.vercel.app'}/success`,
-    ErrorRedirectUrl:   `${process.env.BARBERS_SITE_URL || 'https://barber-sites.vercel.app'}/error`,
+    SuccessRedirectUrl: `${process.env.BARBERS_SITE_URL || 'https://barbers-sites.vercel.app'}/success`,
+    ErrorRedirectUrl:   `${process.env.BARBERS_SITE_URL || 'https://barbers-sites.vercel.app'}/error`,
     Language:           'he',
     InternalDealNumber: leadId || '',
     ReturnValue:        leadId || '',
     CustomerName:       customerName || '',
-    CSSUrl:             `${process.env.BARBERS_SITE_URL || 'https://barber-sites.vercel.app'}/cardcom.css`,
+    CSSUrl:             `${process.env.BARBERS_SITE_URL || 'https://barbers-sites.vercel.app'}/cardcom.css`,
   });
 
   const cardcomRes = await fetch('https://secure.cardcom.solutions/Interface/LowProfile.aspx', {
