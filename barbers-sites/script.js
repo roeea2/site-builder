@@ -195,7 +195,7 @@ contactForm?.addEventListener('submit', async e => {
 document.getElementById('btn-callback')?.addEventListener('click', () => {
   const { name, phone, barberName, email } = submittedData;
   const msg = encodeURIComponent(
-    `שלום רועי,\nלקוח חדש ממתין לשיחה:\nמספרה: ${barberName}\nשם: ${name}\nטלפון: ${phone}\nאימייל: ${email || '—'}`
+    `שלום רועי,\nממש בא לי להקים אתר מגניב\nמספרה: ${barberName}\nשם: ${name}\nטלפון: ${phone}\nאימייל: ${email || '—'}`
   );
   window.open(`https://wa.me/972542345222?text=${msg}`, '_blank');
 });
